@@ -11,11 +11,13 @@ const CardProduto = styled.div`
   justify-items: stretch;
   width: 200px;
   height: 240px;
+  background: linear-gradient(white, lightblue);
+  text-align: center;
 `
 
 const CardImage = styled.img`
   width: 200px;
-  height: 150;
+  height: 140px;
   margin-right: 10px;
 `
 
@@ -29,7 +31,7 @@ class Card extends React.Component {
                 <CardProduto>
                     <CardImage src={this.props.link} alt="foto-do-planeta" />
                     <p>{this.props.planeta}</p>
-                    <p>{this.props.preco}</p>
+                    <p>R$ {this.props.preco}</p>
                     <BotaoAdd>Adicionar ao carrinho</BotaoAdd>
                 </CardProduto>
         )
