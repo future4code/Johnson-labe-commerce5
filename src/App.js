@@ -103,15 +103,21 @@ class App extends React.Component {
   };
 
   onChangeValorMin = (event) => {
-    this.setState({ inputValorMinimo: event.target.value });
+    if (event.target.value===""){this.setState({ inputValorMinimo: -Infinity })}
+    else {
+    this.setState({ inputValorMinimo: event.target.value });}
   };
 
   onChangeValorMax = (event) => {
-    this.setState({ inputValorMaximo: event.target.value });
+    if (event.target.value===""){this.setState({ inputValorMaximo: +Infinity })}
+    else {
+    this.setState({ inputValorMaximo: event.target.value });}
   };
 
   render() {
     /* ---- ÁREA DE TESTE -----*/
+   /* console.log(this.state.inputValorMaximo)
+    console.log(this.state.inputValorMinimo)*/
     return (
       <ContainerPagina>
         <Header />
