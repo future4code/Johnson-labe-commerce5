@@ -2,36 +2,45 @@ import React from 'react';
 import styled from 'styled-components'
 
 const CardProduto = styled.div`
-  display: grid;
-  grid-template-rows: 3fr 1fr ;
-  grid-template-columns: 1fr;
-  border-style: solid;
-  border-width: thin;
-  align-items: start;
-  justify-items: stretch;
-  width: 200px;
-  height: 240px;
+  display: flex;
+  width: 220px;
+  margin: 5px auto;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
   background: linear-gradient(white, lightblue);
   text-align: center;
 `
+
 const CardContainer = styled.div`
-display:grid;
-grid-template-columns: 1fr 1fr 1fr 1fr;
-grid-template-rows: auto;
-align-items: center;
-width: 100%;
-height: 100%;
-justify-items: center;
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  justify-items: center;
 
 `
 const CardImage = styled.img`
-  width: 200px;
+  width: 220px;
   height: 140px;
-  margin-right: 10px;
 `
 
 const BotaoAdd = styled.button`
-width: 200px;
+box-shadow: 3px 3px 3px 3px  lightgrey;
+            border: none;
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 10pt;
+            border-radius: 5px;
+            background: gray;
+            font-weight: 600;
+            line-height: 20px;
+            cursor: pointer;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
 `
 
 class Card extends React.Component {
@@ -75,8 +84,9 @@ class Card extends React.Component {
               <CardImage src={viagem.imageUrl} alt="foto-do-planeta" />
               <p>{viagem.name}</p>
               <p>R$ {viagem.value}</p>
-              <BotaoAdd>Adicionar ao carrinho</BotaoAdd>
+              <BotaoAdd onClick={()=>this.props.addPlanetaAoCarrinho(viagem)}>Adicionar ao carrinho</BotaoAdd>
             </CardProduto>)
+            
         })}
       </CardContainer>)
 
