@@ -54,7 +54,7 @@ class Card extends React.Component {
           return item.id;
         }
       });
-/*
+  /*
     if (this.state.ordem === "crescente") {
       produtoFiltrado.sort((a, b) => {
         return a.value < b.value ? -1 : a.value > b.value ? 1 : 0;

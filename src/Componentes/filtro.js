@@ -23,41 +23,59 @@ label{
 }
 `
 
-export class Filtros extends React.Component {
+export default class Filtro extends React.Component {
+    state = {
+        checked: false}
+
+    handleCheckboxChange = event => {
+        this.setState({ checked: event.target.checked })
+    }
     render() {
         return (
 
             <CorpoFiltros>
-                <h1>Filtros</h1><br /><br />
+                <h1>Filtros</h1><br/>
 
                 <label>Valor Mínimo</label>
-                <input 
+                <input
                     type="number"
                     value={this.props.inputValorMinimo}
                     type="number"
-                    onChange={this.props.onChangeValorMin} 
+                    onChange={this.props.onChangeValorMin}
                     placeholder="R$"
                 />
                 <label>Valor Máximo</label>
-                <input   
+                <input
                     value={this.props.inputValorMaximo}
                     type="number"
-                    onChange={this.props.onChangeValorMax} 
+                    onChange={this.props.onChangeValorMax}
                     placeholder="R$"
                 />
-                <br/>
+                <br />
                 <label>Buscar Produto</label>
-                <input 
-                    placeholder="Insira o nome do produto " 
-                    type="text" 
+                <input
+                    placeholder="Insira o nome do produto "
+                    type="text"
                     value={this.props.inputValue}
-                    onChange={this.props.onChangeBuscaNome} 
+                    onChange={this.props.onChangeBuscaNome}
                 />
-
+                <p>Ordem:</p>
+                <label>
+                    <input
+                        type="checkbox"
+                        value=""
+                        checked={this.state.checked}
+                        onChange={this.handleCheckboxChange}
+                    /> <span>Crescente</span>
+                    <input
+                        type="checkbox"
+                        value=""
+                        checked={this.state.checked}
+                        onChange={this.handleCheckboxChange}
+                    /> <span>Decrescente</span>
+                </label>
 
             </CorpoFiltros>
         )
     }
 }
-
-export default Filtros;
