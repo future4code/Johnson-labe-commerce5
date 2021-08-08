@@ -92,8 +92,10 @@ class App extends React.Component {
     filtro: "",
     inputValorMaximo: +Infinity,
     inputValorMinimo: -Infinity,
-    arrayCarrinho: []
-    
+    arrayCarrinho: [],
+    ordem: "",
+    quantidade: 0
+
   };
 
   addPlanetaAoCarrinho = (planeta) => {
@@ -134,52 +136,71 @@ class App extends React.Component {
   };
 
   onChangeValorMin = (event) => {
-    if (event.target.value===""){this.setState({ inputValorMinimo: -Infinity })}
+    if (event.target.value === "") { this.setState({ inputValorMinimo: -Infinity }) }
     else {
-    this.setState({ inputValorMinimo: event.target.value });}
+      this.setState({ inputValorMinimo: event.target.value });
+    }
   };
 
   onChangeValorMax = (event) => {
-    if (event.target.value===""){this.setState({ inputValorMaximo: +Infinity })}
+    if (event.target.value === "") { this.setState({ inputValorMaximo: +Infinity }) }
     else {
-    this.setState({ inputValorMaximo: event.target.value });}
+      this.setState({ inputValorMaximo: event.target.value });
+    }
   };
 
+  changeOrdem = (novaOrdem) => {
+    this.setState({
+      ordem: novaOrdem
+    })
+  }
+
+  updateQntd = (novaQuantidade) => {
+    this.setState({
+      quantidade: novaQuantidade
+    })
+  }
+
   render() {
-    /* ---- ÁREA DE TESTE -----*/
-   /* console.log(this.state.inputValorMaximo)
-    console.log(this.state.inputValorMinimo)*/
+    console.log(this.state.ordem)
     return (
       <ContainerPagina>
         <Header />
         <ContainerMain>
-            <Filtros
-              listaPlanetas = {this.state.planetas}
+          <Filtros
+            listaPlanetas={this.state.planetas}
+            inputValue={this.state.inputValue}
+            inputValorMinimo={this.state.inputValorMinimo}
+            inputValorMaximo={this.state.inputValorMaximo}
+            onChangeBuscaNome={this.onChangeBuscaNome}
+            onChangeValorMin={this.onChangeValorMin}
+            onChangeValorMax={this.onChangeValorMax}
+            ordem={this.state.ordem}
+            changeOrdem={this.changeOrdem.bind(this)}
+          />
+
+          <PaginaPrincipal>
+            <h1>Pacotes</h1>
+            
+            <Card
+              planeta={this.state.planetas}
               inputValue={this.state.inputValue}
-              inputValorMinimo={this.state.inputValorMinimo}
               inputValorMaximo={this.state.inputValorMaximo}
-              onChangeBuscaNome={this.onChangeBuscaNome}
-              onChangeValorMin={this.onChangeValorMin}
-              onChangeValorMax={this.onChangeValorMax}
-              />
+              inputValorMinimo={this.state.inputValorMinimo}
+              id={this.state.id}
+              addPlanetaAoCarrinho={this.addPlanetaAoCarrinho}
+              ordem={this.state.ordem}
+              qntDeProduto={this.state.quantidade}
+              updateQuantidade={this.updateQntd.bind(this)}
 
-            <PaginaPrincipal>
-              <h1>Pacotes</h1>
-
-              <Card
-                planeta={this.state.planetas}
-                inputValue={this.state.inputValue}
-                inputValorMaximo={this.state.inputValorMaximo}
-                inputValorMinimo={this.state.inputValorMinimo} 
-                id={this.state.id}
-                addPlanetaAoCarrinho={this.addPlanetaAoCarrinho}/>
-
-            </PaginaPrincipal>
-
-            <Carrinho
-              arrayCarrinho={this.state.arrayCarrinho}
-              removePlanetaDoCarrinho={this.removePlanetaDoCarrinho}
             />
+
+          </PaginaPrincipal>
+
+          <Carrinho
+            arrayCarrinho={this.state.arrayCarrinho}
+            removePlanetaDoCarrinho={this.removePlanetaDoCarrinho}
+          />
         </ContainerMain>
         <Footer />
       </ContainerPagina>

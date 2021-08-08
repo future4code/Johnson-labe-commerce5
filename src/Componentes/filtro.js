@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
 const CorpoFiltros = styled.div`
 display: flex;
 flex-flow: column wrap;
@@ -23,14 +22,35 @@ label{
 }
 `
 
-export default class Filtro extends React.Component {
-    state = {
-        checked: false}
+const CheckBox = styled.div`
+display: flex;
+gap: 2px;
+`
 
-    handleCheckboxChange = event => {
-        this.setState({ checked: event.target.checked })
-    }
+export default class Filtro extends React.Component {
+      state = {
+          isChecked: [false,false],
+          ordens: [{nome: "Crescente"},{ nome:"Decrescente"}]
+          
+      }
+
+    handleOnChange = (position) => {
+        const updateCheckedState = this.state.isChecked.map((item,index) => {
+            return index === position ? !item : item
+        })
+        
+        updateCheckedState.map((item, index) => {
+            if (item) {
+                this.props.changeOrdem(this.state.ordens[index].nome)
+            }
+        })
+        return  this.setState({isChecked: updateCheckedState})
+    };
+
+    
     render() {
+      
+        const ordensVar = [...this.state.ordens]
         return (
 
             <CorpoFiltros>
@@ -40,7 +60,6 @@ export default class Filtro extends React.Component {
                 <input
                     type="number"
                     value={this.props.inputValorMinimo}
-                    type="number"
                     onChange={this.props.onChangeValorMin}
                     placeholder="R$"
                 />
@@ -60,20 +79,39 @@ export default class Filtro extends React.Component {
                     onChange={this.props.onChangeBuscaNome}
                 />
                 <p>Ordem:</p>
-                <label>
+                {ordensVar.map((item, index) => {
+                    return (
+                        <CheckBox>
+                        <input
+                            type="checkbox"
+                            id = {`custom-cb-${index}`}
+                            name = {item}
+                            value = {item}
+                            checked = {this.state.isChecked[index]}
+                            onChange = {() => this.handleOnChange(index)}
+                        />
+                        <label htmlFor={`custom-cb-${index}`}>{item.nome}</label>
+                        </CheckBox>
+                    )
+                })
+                }
+                {/*<label>
                     <input
                         type="checkbox"
-                        value=""
-                        checked={this.state.checked}
-                        onChange={this.handleCheckboxChange}
+                        value="crescente"
+                        id="0"
+                        checked={this.state.isChecked}
+                        onChange={this.handleOnChange}
                     /> <span>Crescente</span>
                     <input
                         type="checkbox"
-                        value=""
-                        checked={this.state.checked}
-                        onChange={this.handleCheckboxChange}
+                        value="decrescente"
+                        id="1"
+                        checked={this.state.isChecked}
+                        onChange={this.handleOnChange}
                     /> <span>Decrescente</span>
-                </label>
+                    <br/>Above box is {this.state.isChecked? "checked" : "unchecked"}
+                </label>*/}
 
             </CorpoFiltros>
         )
