@@ -4,10 +4,7 @@ import Header from './Componentes/header';
 import Card from './Componentes/card';
 import Footer from './Componentes/footer';
 import Filtros from './Componentes/filtro';
-
-const ContainerCard = styled.div`
-
-`
+import Carrinho from './Componentes/carrinho'
 
 const ContainerMain = styled.div`
 display: flex;
@@ -95,8 +92,42 @@ class App extends React.Component {
     filtro: "",
     inputValorMaximo: +Infinity,
     inputValorMinimo: -Infinity,
+    arrayCarrinho: []
     
   };
+
+  addPlanetaAoCarrinho = (planeta) => {
+    const arrayTemporario = this.state.arrayCarrinho
+    const arrayFiltrado = arrayTemporario.filter((item) => { return item.id === planeta.id })
+    if (arrayFiltrado.length > 0) {
+      const somaCarrinho = arrayTemporario.map((item) => {
+        if (arrayFiltrado[0].id === item.id) {
+          item.quantidade++
+        }
+        return item
+      })
+      this.setState({ arrayCarrinho: somaCarrinho })
+    } else if (arrayFiltrado.length === 0) {
+      const itemCarrinho = {
+        id: planeta.id,
+        name: planeta.name,
+        value: planeta.value,
+        quantidade: 1
+      }
+      const carrinho = [...this.state.arrayCarrinho, itemCarrinho]
+      this.setState({ arrayCarrinho: carrinho })
+    }
+  }
+
+  removePlanetaDoCarrinho = (prodCar) => {
+    const itensNaoDeletados = this.state.arrayCarrinho.map((prods) => {
+      if (prods.id === prodCar.id) {
+        return { ...prods, quantidade: prods.quantidade - 1 }
+      }
+      return prods
+    }).filter((prods) => prods.quantidade > 0)
+    this.setState({ arrayCarrinho: itensNaoDeletados })
+  }
 
   onChangeBuscaNome = (event) => {
     this.setState({ inputValue: event.target.value });
@@ -133,10 +164,7 @@ class App extends React.Component {
               />
 
             <PaginaPrincipal>
-              <h1>Destinos</h1>
               <h1>Pacotes</h1>
-
-            
 
               <Card
                 planeta={this.state.planetas}
@@ -144,12 +172,14 @@ class App extends React.Component {
                 inputValorMaximo={this.state.inputValorMaximo}
                 inputValorMinimo={this.state.inputValorMinimo} 
                 id={this.state.id}
-                 /* adicionaItemAoCarrinho={this.adicionaItemAoCarrinho} */ />
+                addPlanetaAoCarrinho={this.addPlanetaAoCarrinho}/>
 
-           
             </PaginaPrincipal>
-          
 
+            <Carrinho
+              arrayCarrinho={this.state.arrayCarrinho}
+              removePlanetaDoCarrinho={this.removePlanetaDoCarrinho}
+            />
         </ContainerMain>
         <Footer />
       </ContainerPagina>
