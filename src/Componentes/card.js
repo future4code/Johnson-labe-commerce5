@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 
+
 const CardProduto = styled.div`
   display: flex;
   width: 220px;
@@ -45,6 +46,8 @@ box-shadow: 3px 3px 3px 3px  lightgrey;
 
 class Card extends React.Component {
   render() {
+
+
     const produtoFiltrado = this.props.planeta
       .filter((item) => {
         if (
@@ -63,20 +66,22 @@ class Card extends React.Component {
           return item.id;
         }
       });
-  /*
-    if (this.state.ordem === "crescente") {
+
+    if (this.props.ordem === "Crescente") {
       produtoFiltrado.sort((a, b) => {
         return a.value < b.value ? -1 : a.value > b.value ? 1 : 0;
       })
-    } else if (this.state.ordem === "decrescente") {
+    } else if (this.props.ordem === "Decrescente") {
       produtoFiltrado.sort((a, b) => {
         return a.value > b.value ? -1 : a.value < b.value ? 1 : 0;
       })
-    }*/
+    }
 
     const quantidadeDeItem = (produtoFiltrado.length)
+    /*Mostrar quantidade de item não foi implementado por error de chamar infinitamente o props*/
 
     return (
+
       <CardContainer>
         {produtoFiltrado.map((viagem) => {
           return (
@@ -84,9 +89,9 @@ class Card extends React.Component {
               <CardImage src={viagem.imageUrl} alt="foto-do-planeta" />
               <p>{viagem.name}</p>
               <p>R$ {viagem.value}</p>
-              <BotaoAdd onClick={()=>this.props.addPlanetaAoCarrinho(viagem)}>Adicionar ao carrinho</BotaoAdd>
+              <BotaoAdd onClick={() => this.props.addPlanetaAoCarrinho(viagem)}>Adicionar ao carrinho</BotaoAdd>
             </CardProduto>)
-            
+
         })}
       </CardContainer>)
 
